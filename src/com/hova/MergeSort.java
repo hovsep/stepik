@@ -2,7 +2,7 @@ package com.hova;
 
 public class MergeSort {
 
-    public static void main(String[] args) {
+    public static void showResult(String[] args) {
         int[] a1 = {0, 2,2};
         int[] a2 = {1, 3,5};
 
