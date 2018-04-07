@@ -1,11 +1,22 @@
 package com.hova;
 
+import javax.xml.soap.Text;
+
 public class Test {
 
     public static void main(String[] args) {
 
-        System.out.println(IntegrateTest.integrate(x -> 1, 0, 10));//10.0
-        System.out.println(IntegrateTest.integrate(x -> x + 2, 0, 10));//70.0
-        System.out.println(IntegrateTest.integrate( x -> Math.sin(x) / x , 1, 5));//0.603848
+    }
+
+    public Label checkLabels(TextAnalyzer[] analyzers, String text) {
+
+        for(TextAnalyzer ta : analyzers) {
+            Label l = ta.processText(text);
+            if (Label.OK != l) {
+                return l;
+            }
+        }
+
+        return Label.OK;
     }
 }

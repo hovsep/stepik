@@ -1,0 +1,5 @@
+package com.hova;
+
+enum Label {
+    SPAM, NEGATIVE_TEXT, TOO_LONG, OK
+}
