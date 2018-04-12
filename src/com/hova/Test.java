@@ -1,35 +1,28 @@
 package com.hova;
 
 
+import java.util.logging.*;
+
 public class Test {
 
     public static void main(String[] args) {
-        System.out.println(getCallerClassAndMethodName());
-        anotherMethod();
+        Logger l1 = java.util.logging.Logger.getLogger("org.stepic.java.logging.ClassA");
+        l1.setLevel(Level.ALL);
+        l1.setUseParentHandlers(true);
+
+        Logger l2 = java.util.logging.Logger.getLogger("org.stepic.java.logging.ClassB");
+        l2.setLevel(Level.WARNING);
+        l2.setUseParentHandlers(true);
+
+        Handler h = new ConsoleHandler();
+        Formatter f = new XMLFormatter();
+        h.setFormatter(f);
+        h.setLevel(Level.ALL);
+        Logger l3 = java.util.logging.Logger.getLogger("org.stepic.java");
+        l3.setUseParentHandlers(false);
+        l3.addHandler(h);
+
     }
 
-    private static void anotherMethod() {
-        System.out.println(getCallerClassAndMethodName());
-    }
-
-    public static String getCallerClassAndMethodName() {
-        String caller = "";
-
-        try {
-            throw new Exception("Dummy");
-
-        } catch (Exception e) {
-            StackTraceElement[] stackTrace = e.getStackTrace();
-            if (stackTrace.length < 3) {
-                caller = null;
-            } else {
-                StackTraceElement ste = stackTrace[2];
-                caller = ste.getClassName() + "#" + ste.getMethodName();
-            }
-
-        }
-
-        return caller;
-    }
 
 }
