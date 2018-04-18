@@ -2,37 +2,52 @@ package com.hova;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 
 public class Test {
+
     public static void main(String[] args) {
-        InputStream test = new ByteArrayInputStream(new byte[] {0x33, 0x45, 0x01});
-
-        try {
-            System.out.println(checkSumOfStream(test));
-        } catch (Exception e) {
-            System.out.println("AAAAArh!" + e.getMessage());
-        }
-
+        test();
     }
 
-
-    public static int checkSumOfStream(InputStream inputStream) throws IOException {
+    public static void test() {
+        ByteArrayInputStream ti = new ByteArrayInputStream(new byte[] {65,13, 10, 10, 13});
         try {
-            int p = 0,n;
+            int b = 0 ;
+            boolean f = false;
 
-            while ((n = inputStream.read()) != -1) {
-               if (0 == p) {
-                   p = Integer.rotateLeft(0,1)^n;
-               } else {
-                   p = Integer.rotateLeft(p,1)^n;
-               }
+            while ((b = ti.read()) != -1) {
+
+                if (f) {
+                    if (b == 10) {
+                        System.out.println(10);
+                        f = false;
+                        continue;
+                    } else {
+                        System.out.println(13);
+                    }
+
+                }
+
+
+
+                if (b == 13) {
+                    f = true;
+                } else {
+                    System.out.println(b);
+                    f = false;
+                }
+
             }
 
-            return p;
+            if (f) {
+                System.out.println(13);
+            }
+
+            System.out.flush();
+
         } catch (Exception e) {
-            throw e;
+
         }
     }
 
