@@ -1,32 +1,32 @@
 package com.hova;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Test {
 
     public static void main(String[] args) {
         try {
-            System.out.print(readAsString(System.in, StandardCharsets.UTF_8));
+            Scanner scanner = new Scanner(System.in);
+            scanner.useLocale(Locale.ENGLISH);
+            double sum = 0;
+
+            while (scanner.hasNext()) {
+                try {
+                    sum += Double.parseDouble(scanner.next());
+                } catch (Exception e) {
+                }
+            }
+
+            System.out.printf("%.6f", sum);
+
         } catch (Exception e) {
-
         }
 
     }
 
-    public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
-        InputStreamReader reader = new InputStreamReader(inputStream, charset);
-        StringBuilder sb = new StringBuilder();
-        int b;
-        while ((b = reader.read()) != -1) {
-            sb.append(Character.toChars(b));
-        }
-
-        return sb.toString();
-    }
 
 
 }
