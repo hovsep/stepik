@@ -1,16 +1,21 @@
 package com.hova;
 
-import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 public class Test {
 
     public static void main(String[] args) {
-        String s = "Ы";
-        byte[] raw = s.getBytes(StandardCharsets.UTF_8);
-        for (byte b:raw) {
-            System.out.println(Byte.toUnsignedInt(b));
+        Writer writer = new OutputStreamWriter(System.out, StandardCharsets.US_ASCII);
+
+        try {
+            writer.write("Ы");
+            writer.flush();
+        } catch (Exception e) {
+
         }
+
     }
 
 
