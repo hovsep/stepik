@@ -1,21 +1,31 @@
 package com.hova;
 
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class Test {
 
     public static void main(String[] args) {
-        Writer writer = new OutputStreamWriter(System.out, StandardCharsets.US_ASCII);
-
         try {
-            writer.write("Ы");
-            writer.flush();
+            System.out.print(readAsString(System.in, StandardCharsets.UTF_8));
         } catch (Exception e) {
 
         }
 
+    }
+
+    public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
+        InputStreamReader reader = new InputStreamReader(inputStream, charset);
+        StringBuilder sb = new StringBuilder();
+        int b;
+        while ((b = reader.read()) != -1) {
+            sb.append(Character.toChars(b));
+        }
+
+        return sb.toString();
     }
 
 
