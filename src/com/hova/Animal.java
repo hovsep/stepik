@@ -3,7 +3,7 @@ package com.hova;
 import java.io.Serializable;
 import java.util.Objects;
 
-class Animal implements Serializable {
+class Animal<X> implements Serializable {
     public final String name;
 
     public Animal(String name) {
