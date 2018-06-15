@@ -1,48 +1,38 @@
 package com.hova;
 
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class Test {
 
 
     public static void main(String[] args) {
-       HashSet<Integer> s1 = new HashSet<>();
-       HashSet<Integer> s2 = new HashSet<>();
-       Set d;
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        Scanner scanner = new Scanner(System.in);
+        Integer i = 0;
+        Integer next;
 
-       s1.add(1);
-       s1.add(2);
-       s1.add(3);
+        while (scanner.hasNextInt()) {
+            next = scanner.nextInt();
+            if (i % 2 != 0) {
+                q.add(next);
+            }
+            i++;
+        }
 
-       s2.add(0);
-       s2.add(1);
-       s2.add(2);
+        Iterator<Integer> iterator = q.descendingIterator();
 
-       d = symmetricDifference(s1,s2);
+        while (iterator.hasNext()) {
 
-       Iterator<Integer> i = d.iterator();
+            System.out.print(iterator.next() + " ");
+        }
 
-       while(i.hasNext()) {
-           System.out.println(i.next());
-       }
+
+
     }
 
-    public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
-        HashSet<Integer> d,s1,s2;
-
-        s1 = new HashSet(set1);
-        s2 = new HashSet(set2);
-        d = new HashSet<>();
-
-        s1.removeAll(set2);
-        s2.removeAll(set1);
-
-        d.addAll(s1);
-        d.addAll(s2);
-
-        return (Set) d;
-    }
 
 
 
