@@ -1,42 +1,28 @@
 package com.hova;
 
-
-import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Test {
 
 
     public static void main(String[] args) {
-        ArrayDeque<Integer> q = new ArrayDeque<>();
-        Scanner scanner = new Scanner(System.in);
-        Integer i = 0;
-        Integer next;
-
-        while (scanner.hasNextInt()) {
-            next = scanner.nextInt();
-            if (i % 2 != 0) {
-                q.add(next);
-            }
-            i++;
-        }
-
-        Iterator<Integer> iterator = q.descendingIterator();
-
-        while (iterator.hasNext()) {
-
-            System.out.print(iterator.next() + " ");
-        }
-
-
-
+        Predicate<Object> condition = Objects::isNull;
+        Function<Object, Integer> ifTrue = obj -> 0;
+        Function<CharSequence, Integer> ifFalse = CharSequence::length;
+        Function<String, Integer> safeStringLength = ternaryOperator(condition, ifTrue, ifFalse);
     }
 
+    public static <T, U> Function<T, U> ternaryOperator(
+            Predicate<? super T> condition,
+            Function<? super T, ? extends U> ifTrue,
+            Function<? super T, ? extends U> ifFalse) {
 
+        return x -> {
+            return condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
+        };
 
-
-
-
+    }
 
 }
