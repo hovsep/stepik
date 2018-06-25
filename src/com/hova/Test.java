@@ -1,23 +1,40 @@
 package com.hova;
 
-import java.util.stream.IntStream;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Test {
 
 
     public static void main(String[] args) {
-        IntStream s = pseudoRandomStream(13);
 
-        s.forEach(System.out::println);
     }
 
-    public static IntStream pseudoRandomStream(int seed) {
-        IntStream s = IntStream.iterate(seed, n -> {
-            Integer nsq = n * n;
-            return nsq % 10000 / 10;
-        }).limit(seed);
+    public static <T> void findMinMax(
+            Stream<? extends T> stream,
+            Comparator<? super T> order,
+            BiConsumer<? super T, ? super T> minMaxConsumer) {
 
-        return s;
+        T max = null;
+        T min = null;
+
+        List<T> list= stream.collect(Collectors.toList());
+
+        try {
+            max = Collections.max(list, order);
+            min = Collections.min(list, order);
+        } catch (Exception e) {
+
+        }
+
+
+        minMaxConsumer.accept(min,max);
     }
 
 
