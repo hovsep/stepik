@@ -1,5 +1,6 @@
 package com.hova.last;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.function.Consumer;
 
 public  class MailService<T> implements Consumer<Sendable<T>> {
 
-    private MailboxMap<String, List<T>> mailBox;
+    private MailboxMap<String, List<T>> mailBox = new MailboxMap<>();
 
     public void accept(Sendable<T> tSendable) {
 
@@ -15,7 +16,7 @@ public  class MailService<T> implements Consumer<Sendable<T>> {
             List<T> existingList = (List<T>) this.mailBox.get(tSendable.getTo());
             existingList.add((T) tSendable.getContent());
         } else {
-            List<T> freshList = Arrays.asList(tSendable.getContent());
+            List<T> freshList =  new ArrayList<>(Arrays.asList(tSendable.getContent()));
             this.mailBox.put(tSendable.getTo(), freshList);
         }
 
