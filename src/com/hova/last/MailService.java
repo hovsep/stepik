@@ -7,15 +7,16 @@ import java.util.function.Consumer;
 
 public  class MailService<T> implements Consumer<Sendable<T>> {
 
-    private Map<String, List<T>> mailBox;
+    private MailboxMap<String, List<T>> mailBox;
 
     public void accept(Sendable<T> tSendable) {
 
         if (this.mailBox.containsKey(tSendable.getTo())) {
-            this.mailBox.get(tSendable.getTo()).add((T) tSendable.getContent());
+            List<T> existingList = (List<T>) this.mailBox.get(tSendable.getTo());
+            existingList.add((T) tSendable.getContent());
         } else {
             List<T> freshList = Arrays.asList(tSendable.getContent());
-            //this.mailBox.put(tSendable.getTo(), freshList);
+            this.mailBox.put(tSendable.getTo(), freshList);
         }
 
     }
