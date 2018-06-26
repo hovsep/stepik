@@ -1,9 +1,9 @@
 package com.hova;
 
 
-import java.nio.charset.Charset;
 import java.util.*;
-import java.util.regex.Pattern;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Test {
 
@@ -11,44 +11,33 @@ public class Test {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in, "UTF-8");
         String input = scanner.nextLine();
-        System.out.println("INPUT: " + input);
         String[] words = input.toLowerCase().split("[\\p{Blank}\\p{Punct}]+");
-        Map<String, Integer> freqMap = new HashMap<String, Integer>();
-        Integer out = 0;
+        List<String> items = Arrays.asList(words);
 
+        Map<String, Long> result =
+                items.stream().collect(
+                        Collectors.groupingBy(
+                                Function.identity(), Collectors.counting()
+                        )
+                );
 
-        for (String word: words) {
-            if (freqMap.containsKey(word)) {
-                freqMap.compute(word, (k,v) -> (v+= 1));
-            } else {
-                freqMap.put(word, 1);
-            }
-        }
+        Map<String, Long> finalMap = new LinkedHashMap<>();
 
-        freqMap = sortByValue(freqMap);
+        //Sort a map and add to finalMap
+        result.entrySet()
+              .stream()
+              .sorted((e1,e2) -> {
+                  if (e1.getValue() == e2.getValue()) {
+                      return String.CASE_INSENSITIVE_ORDER.compare(e1.getKey(), e2.getKey());
+                  } else {
+                      return Long.compare(e2.getValue(), e1.getValue());
+                  }
+              })
+              .limit(10)
+              .forEachOrdered(e -> finalMap.put(e.getKey(), e.getValue()));
 
-        freqMap.forEach((k,v) -> {System.out.println(k + " " + v );});
+        finalMap.forEach((s,i) -> System.out.println(s));
 
-
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> unsortMap) {
-
-        List<Map.Entry<K, V>> list =
-                new LinkedList<Map.Entry<K, V>>(unsortMap.entrySet());
-
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        Map<K, V> result = new LinkedHashMap<K, V>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
 
     }
 
