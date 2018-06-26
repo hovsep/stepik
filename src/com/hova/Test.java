@@ -12,10 +12,10 @@ public class Test {
         Scanner scanner = new Scanner(System.in, "UTF-8");
         String input = scanner.nextLine();
         String[] words = input.toLowerCase().split("[\\p{Blank}\\p{Punct}]+");
-        List<String> items = Arrays.asList(words);
+
 
         Map<String, Long> result =
-                items.stream().collect(
+                Arrays.stream(words).collect(
                         Collectors.groupingBy(
                                 Function.identity(), Collectors.counting()
                         )
